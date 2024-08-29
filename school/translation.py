@@ -1,5 +1,14 @@
 from modeltranslation.translator import register, TranslationOptions
-from .models import Slider,About,OurHistory,Result,Partner
+from .models import (
+    Slider,
+    About,
+    OurHistory,
+    Result,
+    Partner,
+    AboutCard,
+    Teacher,
+    )
+
 
 @register(Slider)
 class SliderTranslateOptions(TranslationOptions):
@@ -21,3 +30,11 @@ class ResultTranslateOptions(TranslationOptions):
 @register(Partner)
 class PartnerTranslateOptions(TranslationOptions):
     fields = ('name',)
+
+@register(AboutCard)
+class AboutCardTranslateOptions(TranslationOptions):
+    fields = ('name','description')
+    
+@register(Teacher)
+class TeacherTranslateOptions(TranslationOptions):
+    fields = ('name','direction')

@@ -1,13 +1,22 @@
 from rest_framework import serializers
-from .models import Partner, Slider,About,OurHistory,Result
+from .models import (
+    Partner,
+    Slider,
+    About,
+    OurHistory,
+    Result,
+    AboutCard,
+    Teacher,
+    )
 
 class SliderSerializer(serializers.ModelSerializer):
     title = serializers.SerializerMethodField()
     description = serializers.SerializerMethodField()
+    image_url = serializers.SerializerMethodField()
 
     class Meta:
         model = Slider
-        fields = ['id', 'title', 'image', 'description']
+        fields = ['id', 'title', 'image_url', 'description']
 
     def get_title(self, obj):
         return {
@@ -15,6 +24,12 @@ class SliderSerializer(serializers.ModelSerializer):
             'ru': obj.title_ru,
             'en': obj.title_en
         }
+        
+    def get_image_url(self,obj):
+        request = self.context.get('request')
+        if obj.image:
+            return request.build_absolute_uri(obj.image.url)
+        return None
 
     def get_description(self, obj):
         return {
@@ -26,17 +41,24 @@ class SliderSerializer(serializers.ModelSerializer):
 class AboutSerializer(serializers.ModelSerializer):
     title = serializers.SerializerMethodField()
     description = serializers.SerializerMethodField()
+    image_url = serializers.SerializerMethodField()
     
     class Meta:
         model = About
-        fields = ['id','title','slug','image','description']
-        
+        fields = ['id','title','slug','image_url','description']
+         
     def get_title(self, obj):
         return {
             'uz': obj.title_uz,
             'ru': obj.title_ru,
             'en': obj.title_en
         }
+        
+    def get_image_url(self,obj):
+        request = self.context.get('request')
+        if obj.image:
+            return request.build_absolute_uri(obj.image.url)
+        return None
 
     def get_description(self, obj):
         return {
@@ -48,10 +70,10 @@ class AboutSerializer(serializers.ModelSerializer):
 
 class OurHistorySerializer(serializers.ModelSerializer):
     description = serializers.SerializerMethodField()
-    
+    image_url = serializers.SerializerMethodField()
     class Meta:
         model = OurHistory
-        fields = ['id','history_year','description','image']
+        fields = ['id','history_year','description','image_url']
     
     def get_description(self, obj):
         return {
@@ -60,12 +82,20 @@ class OurHistorySerializer(serializers.ModelSerializer):
             'en': obj.description_en
         }
         
+    def get_image_url(self,obj):
+        request = self.context.get('request')
+        if obj.image:
+            return request.build_absolute_uri(obj.image.url)
+        return None
+    
+    
 class ResultSerializer(serializers.ModelSerializer):
     name = serializers.SerializerMethodField()
+    icon_url = serializers.SerializerMethodField()
     
     class Meta:
         model = Result
-        fields = ['id','name','amount','icon']
+        fields = ['id','name','amount','icon_url']
         
     def get_name(self,obj):
         return {
@@ -73,13 +103,21 @@ class ResultSerializer(serializers.ModelSerializer):
             'ru':obj.name_ru,
             'en':obj.name_en
         }
+    
+    def get_icon_url(self,obj):
+        request = self.context.get('request')
+        if obj.icon:
+            return request.build_absolute_uri(obj.icon.url)
+        return None
+        
         
 class PartnerSerializer(serializers.ModelSerializer):
     name = serializers.SerializerMethodField()
+    icon_url = serializers.SerializerMethodField()
     
     class Meta:
         model = Partner
-        fields = ['id','name','link','icon']
+        fields = ['id','name','link','icon_url']
         
     def get_name(self,obj):
         return {
@@ -88,10 +126,93 @@ class PartnerSerializer(serializers.ModelSerializer):
             'en':obj.name_en
         }
 
-
+    def get_icon_url(self,obj):
+        request = self.context.get('request')
+        if obj.icon:
+            return request.build_absolute_uri(obj.icon.url)
+        return None
+    
+    
+class AboutCardSerializer(serializers.ModelSerializer):
+    name = serializers.SerializerMethodField()
+    icon_url = serializers.SerializerMethodField()
+    description = serializers.SerializerMethodField()
+    
+    class Meta:
+        model = AboutCard
+        fields = ['id','name','description','icon_url']
+    
+    def get_name(self,obj):
+        return {
+            'uz':obj.name_uz,
+            'ru':obj.name_ru,
+            'en':obj.name_en
+        }
+    def get_description(self,obj):
+        return {
+            'uz':obj.name_uz,
+            'ru':obj.name_ru,
+            'en':obj.name_en
+        }
+    def get_icon_url(self,obj):
+        request = self.context.get('request')
+        if obj.icon:
+            return request.build_absolute_uri(obj.icon.url)
+        return None
+    
+class TeacherSerializer(serializers.ModelSerializer):
+    name = serializers.SerializerMethodField()
+    direction = serializers.SerializerMethodField()
+    image_url = serializers.SerializerMethodField()
+    link = serializers.SerializerMethodField()
+    
+    class Meta:
+        model = Teacher
+        fields = ['id','name','image_url','direction','link']
+    
+    def get_name(self,obj):
+        return {
+            'uz':obj.name_uz,
+            'ru':obj.name_ru,
+            'en':obj.name_en
+        }
+    
+    def get_image_url(self,obj):
+        request = self.context.get('request')
+        if obj.image:
+            return request.build_absolute_uri(obj.image.url)
+        return None
+    
+    def get_direction(self,obj):
+        return {
+            'uz':obj.direction_uz,
+            'ru':obj.direction_ru,
+            'en':obj.direction_en
+        }
+    
+    def get_link(self,obj):
+        return {
+            'facebook' : obj.facebook_link,
+            'twitter' : obj.twitter_link,
+            'linkedin' : obj.linkedin_link,
+            'skype' : obj.skype_link
+            
+        }
 class HomePageSerializer(serializers.Serializer):
     sliders = SliderSerializer(many=True)
     about = AboutSerializer(many=True)
     our_history = OurHistorySerializer(many=True)
     results = ResultSerializer(many=True)
     partners = PartnerSerializer(many=True)
+    
+    
+class AboutPageSerializer(serializers.Serializer):
+    about = AboutSerializer(many=True)
+    card = AboutCardSerializer(many=True)
+    partners = PartnerSerializer(many=True)
+    
+    
+class TeacherPageSerializer(serializers.Serializer):
+    teacher = TeacherSerializer(many=True)
+    partners = PartnerSerializer(many=True)
+    

@@ -1,6 +1,14 @@
 from django.contrib import admin
-from .models import Slider,About,OurHistory,Result,Partner
 from django.utils.translation import gettext_lazy as _
+from .models import (
+    Slider,
+    About,
+    OurHistory,
+    Result,
+    Partner,
+    AboutCard,
+    Teacher,
+    )
 
 @admin.register(Slider)
 class SliderAdmin(admin.ModelAdmin):
@@ -56,4 +64,26 @@ class PartnerAdmin(admin.ModelAdmin):
         (_('English'),{'fields':('name_en',)}),
         (_('Link'), {'fields': ('link',)}),
         (_('Icon'), {'fields': ('icon',)}),
+    )
+    
+@admin.register(AboutCard)
+class AboutCardAdmin(admin.ModelAdmin):
+    list_display = ('name_uz','name_ru','name_en')
+    fieldsets = (
+        (_('Uzbek'),{'fields':('name_uz','description_uz')}),
+        (_('Russian'),{'fields':('name_ru','description_ru')}),
+        (_('English'),{'fields':('name_en','description_en')}),
+        (_('Icon'), {'fields': ('icon',)}),
+    )
+    
+
+@admin.register(Teacher)
+class TeacherAdmin(admin.ModelAdmin):
+    list_display = ('name_uz','name_ru','name_en')
+    fieldsets = (
+        (_('Uzbek'),{'fields':('name_uz','direction_uz')}),
+        (_('Russian'),{'fields':('name_ru','direction_ru')}),
+        (_('English'),{'fields':('name_en','direction_en')}),
+        (_('Image'), {'fields': ('image',)}),
+        (_('Link'), {'fields': ('facebook_link','twitter_link','linkedin_link','skype_link')}),
     )

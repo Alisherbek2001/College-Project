@@ -71,3 +71,31 @@ class Partner(BaseModel):
     
     def __str__(self) -> str:
         return self.name
+    
+class AboutCard(BaseModel):
+    name = models.CharField(_("Card name"),max_length=225)
+    icon = models.ImageField(_('Card icon'),max_length=255)
+    description = models.TextField(_('Card description'),max_length=255)
+    
+    class Meta:
+        verbose_name = _("About page card")
+        verbose_name_plural = _("About page cards")
+        
+    def __str__(self) -> str:
+        return self.name
+    
+class Teacher(BaseModel):
+    name = models.CharField(_('Teacher'),max_length=255)
+    image = models.ImageField(_('Teacher image'),upload_to='teacher/')
+    direction = models.CharField(_("Teacher's direction"),max_length=255)
+    facebook_link = models.CharField(_('Facebook link'),max_length=255,null=True,blank=True)
+    twitter_link = models.CharField(_('Twitter link'),max_length=255,null=True,blank=True)
+    linkedin_link = models.CharField(_('Linkedin link'),max_length=255,null=True,blank=True)
+    skype_link = models.CharField(_('Skype link'),max_length=255,null=True,blank=True)
+    
+    class Meta:
+        verbose_name = _("Teacher")
+        verbose_name_plural = _("Teachers")
+    
+    def __str__(self) -> str:
+        return self.name
