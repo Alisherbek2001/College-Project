@@ -8,7 +8,11 @@ from .models import (
     Partner,
     AboutCard,
     Teacher,
+    BlogCategory,
+    Blog,
+    Tag
     )
+
 
 @admin.register(Slider)
 class SliderAdmin(admin.ModelAdmin):
@@ -32,6 +36,7 @@ class AboutAdmin(admin.ModelAdmin):
         (_('Image'), {'fields': ('image',)}),
     )
     
+    
 @admin.register(OurHistory)
 class OurhistoryAdmin(admin.ModelAdmin):
     list_display = ('history_year',)
@@ -42,6 +47,7 @@ class OurhistoryAdmin(admin.ModelAdmin):
         (_('English'), {'fields': ('description_en',)}),
         (_('Image'), {'fields': ('image',)}),
     )
+    
     
 @admin.register(Result)
 class ResultAdmin(admin.ModelAdmin):
@@ -55,6 +61,7 @@ class ResultAdmin(admin.ModelAdmin):
         
     )
     
+    
 @admin.register(Partner)
 class PartnerAdmin(admin.ModelAdmin):
     list_display = ('name_uz','name_ru','name_en')
@@ -65,6 +72,7 @@ class PartnerAdmin(admin.ModelAdmin):
         (_('Link'), {'fields': ('link',)}),
         (_('Icon'), {'fields': ('icon',)}),
     )
+   
     
 @admin.register(AboutCard)
 class AboutCardAdmin(admin.ModelAdmin):
@@ -86,4 +94,36 @@ class TeacherAdmin(admin.ModelAdmin):
         (_('English'),{'fields':('name_en','direction_en')}),
         (_('Image'), {'fields': ('image',)}),
         (_('Link'), {'fields': ('facebook_link','twitter_link','linkedin_link','skype_link')}),
+    )
+
+
+@admin.register(BlogCategory)
+class BlogCategoryAdmin(admin.ModelAdmin):
+    list_display = ('name_uz','name_ru','name_en')
+    fieldsets = (
+        (_('Uzbek'),{'fields':('name_uz',)}),
+        (_('Russian'),{'fields':('name_ru',)}),
+        (_('English'),{'fields':('name_en',)}),
+    )
+    
+@admin.register(Blog)
+class BlogAdmin(admin.ModelAdmin):
+    list_display = ('title_uz','title_ru','title_en')
+    fieldsets = (
+        (_('Uzbek'), {'fields': ('title_uz', 'description_uz')}),
+        (_('Russian'), {'fields': ('title_ru', 'description_ru')}),
+        (_('English'), {'fields': ('title_en', 'description_en')}),
+        (_('Category'), {'fields': ('category', )}),
+        (_('Image'), {'fields': ('image', )}),
+        (_('Slug'), {'fields': ('slug', )}),
+        (_('New'), {'fields': ('is_new', )}),
+    )
+
+@admin.register(Tag)
+class TagAdmin(admin.ModelAdmin):
+    list_display = ('name_uz','name_ru','name_en')
+    fieldsets = (
+        (_('Uzbek'),{'fields':('name_uz',)}),
+        (_('Russian'),{'fields':('name_ru',)}),
+        (_('English'),{'fields':('name_en',)}),
     )

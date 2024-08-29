@@ -7,6 +7,9 @@ from .models import (
     Result,
     AboutCard,
     Teacher,
+    Blog,
+    BlogCategory,
+    Tag
     )
 
 class SliderSerializer(serializers.ModelSerializer):
@@ -71,6 +74,7 @@ class AboutSerializer(serializers.ModelSerializer):
 class OurHistorySerializer(serializers.ModelSerializer):
     description = serializers.SerializerMethodField()
     image_url = serializers.SerializerMethodField()
+    
     class Meta:
         model = OurHistory
         fields = ['id','history_year','description','image_url']
@@ -216,3 +220,66 @@ class TeacherPageSerializer(serializers.Serializer):
     teacher = TeacherSerializer(many=True)
     partners = PartnerSerializer(many=True)
     
+
+class BlogCategorySerializer(serializers.ModelSerializer):
+    name = serializers.SerializerMethodField()
+    
+    class Meta:
+        model = BlogCategory
+        fields = ['id','name']
+        
+    def get_name(self,obj):
+        return {
+            'uz':obj.name_uz,
+            'ru':obj.name_ru,
+            'en':obj.name_en
+        }
+        
+        
+class BlogSerializer(serializers.ModelSerializer):
+    title = serializers.SerializerMethodField()
+    description = serializers.SerializerMethodField()
+    image_url = serializers.SerializerMethodField()
+    
+    class Meta:
+        model = Blog
+        fields = ['id','title','category','slug','image_url','description','is_new','created_at','updated_at']
+         
+    def get_title(self, obj):
+        return {
+            'uz': obj.title_uz,
+            'ru': obj.title_ru,
+            'en': obj.title_en
+        }
+        
+    def get_image_url(self,obj):
+        request = self.context.get('request')
+        if obj.image:
+            return request.build_absolute_uri(obj.image.url)
+        return None
+
+    def get_description(self, obj):
+        return {
+            'uz': obj.description_uz,
+            'ru': obj.description_ru,
+            'en': obj.description_en
+        }
+
+class TagSerializer(serializers.ModelSerializer):
+    name = serializers.SerializerMethodField()
+    
+    class Meta:
+        model = Tag
+        fields = ['id','name']
+        
+    def get_name(self,obj):
+        return {
+            'uz':obj.name_uz,
+            'ru':obj.name_ru,
+            'en':obj.name_en
+        }
+
+class BlogPageSerializer(serializers.Serializer):
+    blog = BlogSerializer(many=True)
+    category = BlogCategorySerializer(many=True)
+    tag = TagSerializer(many=True)
