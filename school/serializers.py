@@ -320,3 +320,8 @@ class CoursePageSerializer(serializers.Serializer):
     course = CourseSerializer(many=True)
     partner = PartnerSerializer(many=True)
     
+    
+class BlogDetailPageSerializer(serializers.Serializer):
+    blog = BlogSerializer(many=False)
+    category = BlogCategorySerializer(many=True)
+    tags = TagSerializer(many=True)

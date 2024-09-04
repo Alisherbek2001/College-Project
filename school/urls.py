@@ -5,6 +5,7 @@ from .views import (
     TeacherPageAPIView,
     BlogPageAPIView,
     CoursePageAPIView,
+    BlogDetailAPIView,
 )
 
 urlpatterns = [
@@ -12,5 +13,6 @@ urlpatterns = [
     path('aboutpage/',AboutPageAPIView.as_view(),name='about-page-view'),
     path('teacherpage/',TeacherPageAPIView.as_view(),name='teacher-page-view'),
     path('blogpage/',BlogPageAPIView.as_view(),name='blog-page-list'),
-    path('coursepage/',CoursePageAPIView.as_view(),name='course-page-list')
+    path('coursepage/',CoursePageAPIView.as_view(),name='course-page-list'),
+    path('blog/<slug:slug>/', BlogDetailAPIView.as_view(), name='blog-detail'),
 ]

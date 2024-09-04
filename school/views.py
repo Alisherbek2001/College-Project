@@ -1,5 +1,6 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework import status
 
 from .serializers import (
     HomePageSerializer,
@@ -7,6 +8,7 @@ from .serializers import (
     TeacherPageSerializer,
     BlogPageSerializer,
     CoursePageSerializer,
+    BlogDetailPageSerializer,
 )
 from .models import (
     Slider,
@@ -64,6 +66,24 @@ class BlogPageAPIView(APIView):
             'tag':Tag.objects.all()
         }
         serializer = BlogPageSerializer(data,context={'request':request})
+        return Response(serializer.data)
+
+class BlogDetailAPIView(APIView):
+    def get(self, request, slug):
+        try:
+            blog = Blog.objects.get(slug=slug)
+        except Blog.DoesNotExist:
+            return Response({'error': 'Blog not found'}, status=status.HTTP_404_NOT_FOUND)
+
+        category = BlogCategory.objects.all()
+        tags = Tag.objects.all()
+        
+        data = {
+            'blog': blog,
+            'category': category,
+            'tags': tags
+        }
+        serializer = BlogDetailPageSerializer(data, context={'request': request})
         return Response(serializer.data)
     
 
