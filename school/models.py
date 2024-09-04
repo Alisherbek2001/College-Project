@@ -99,3 +99,59 @@ class Teacher(BaseModel):
     
     def __str__(self) -> str:
         return self.name
+    
+    
+    
+class BlogCategory(BaseModel):
+    name = models.CharField(_("Blog category name"),max_length=255)
+    
+    class Meta:
+        verbose_name = _("Blog category")
+        verbose_name_plural = _("Blog categories")
+
+    def __str__(self) -> str:
+        return self.name
+
+
+class Blog(BaseModel):
+    title = models.CharField(_("Blog title"),max_length=255)
+    slug = models.CharField(_("Blog slug"),max_length=255,blank=True,null=True)
+    category = models.ForeignKey(BlogCategory,on_delete=models.CASCADE,verbose_name=_("Blog category"))
+    image = models.ImageField(_("Blog image"),upload_to='blog/')
+    description = models.TextField(_("Blog description"))
+    is_new = models.BooleanField(default=True)
+    
+    class Meta:
+        verbose_name = _("Blog")
+        verbose_name_plural= _("Blogs")
+    
+    def __str__(self) -> str:
+        return self.title
+    
+    def save(self,*args,**kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        super().save(*args,**kwargs)
+
+class Tag(BaseModel):
+    name = models.CharField(_('Tag name'),max_length=255)
+    
+    class Meta:
+        verbose_name = _("Tag")
+        verbose_name_plural = _("Tags")
+    
+    def __str__(self) -> str:
+        return self.name
+    
+    
+class Course(BaseModel):
+    name = models.CharField(_("Course name"),max_length=255)
+    description = models.TextField(_("Course description"))
+    image = models.ImageField(_("Course image"),upload_to='course/')
+    
+    class Meta:
+        verbose_name = "Course"
+        verbose_name_plural = "Courses"
+        
+    def __str__(self) -> str:
+        return self.name

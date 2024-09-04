@@ -7,6 +7,10 @@ from .models import (
     Partner,
     AboutCard,
     Teacher,
+    BlogCategory,
+    Blog,
+    Tag,
+    Course,
     )
 
 
@@ -38,3 +42,19 @@ class AboutCardTranslateOptions(TranslationOptions):
 @register(Teacher)
 class TeacherTranslateOptions(TranslationOptions):
     fields = ('name','direction')
+    
+@register(Blog)
+class BlogTranslateOptions(TranslationOptions):
+    fields = ('title','description',)
+    
+@register(BlogCategory)
+class BlogCategoryTranslateOptions(TranslationOptions):
+    fields = ('name',)
+    
+@register(Tag)
+class TagTranslateOptions(TranslationOptions):
+    fields = ('name',)
+    
+@register(Course)
+class CourseTranslateOptions(TranslationOptions):
+    fields = ('name','description')
