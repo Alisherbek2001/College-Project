@@ -143,3 +143,15 @@ class Tag(BaseModel):
     def __str__(self) -> str:
         return self.name
     
+    
+class Course(BaseModel):
+    name = models.CharField(_("Course name"),max_length=255)
+    description = models.TextField(_("Course description"))
+    image = models.ImageField(_("Course image"),upload_to='course/')
+    
+    class Meta:
+        verbose_name = "Course"
+        verbose_name_plural = "Courses"
+        
+    def __str__(self) -> str:
+        return self.name

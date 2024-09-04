@@ -10,7 +10,8 @@ from .models import (
     Teacher,
     BlogCategory,
     Blog,
-    Tag
+    Tag,
+    Course
     )
 
 
@@ -126,4 +127,14 @@ class TagAdmin(admin.ModelAdmin):
         (_('Uzbek'),{'fields':('name_uz',)}),
         (_('Russian'),{'fields':('name_ru',)}),
         (_('English'),{'fields':('name_en',)}),
+    )
+    
+@admin.register(Course)
+class CourseAdmin(admin.ModelAdmin):
+    list_display = ('name_uz','name_ru','name_en')
+    fieldsets = (
+        (_('Uzbek'),{'fields':('name_uz','direction_uz')}),
+        (_('Russian'),{'fields':('name_ru','direction_ru')}),
+        (_('English'),{'fields':('name_en','direction_en')}),
+        (_('Image'), {'fields': ('image', )}),
     )

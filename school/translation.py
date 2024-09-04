@@ -9,7 +9,8 @@ from .models import (
     Teacher,
     BlogCategory,
     Blog,
-    Tag
+    Tag,
+    Course,
     )
 
 
@@ -53,3 +54,7 @@ class BlogCategoryTranslateOptions(TranslationOptions):
 @register(Tag)
 class TagTranslateOptions(TranslationOptions):
     fields = ('name',)
+    
+@register(Course)
+class CourseTranslateOptions(TranslationOptions):
+    fields = ('name','description')

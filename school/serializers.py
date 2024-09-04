@@ -9,7 +9,8 @@ from .models import (
     Teacher,
     Blog,
     BlogCategory,
-    Tag
+    Tag,
+    Course,
     )
 
 class SliderSerializer(serializers.ModelSerializer):
@@ -283,3 +284,39 @@ class BlogPageSerializer(serializers.Serializer):
     blog = BlogSerializer(many=True)
     category = BlogCategorySerializer(many=True)
     tag = TagSerializer(many=True)
+    
+
+class CourseSerializer(serializers.ModelSerializer):
+    name = serializers.SerializerMethodField()
+    description = serializers.SerializerMethodField()
+    image_url = serializers.SerializerMethodField()
+    
+    class Meta:
+        model = Tag
+        fields = ['id','name','description','image_url','created_at','updated_at']
+        
+    def get_name(self,obj):
+        return {
+            'uz':obj.name_uz,
+            'ru':obj.name_ru,
+            'en':obj.name_en
+        }
+        
+    def get_image_url(self,obj):
+        request = self.context.get('request')
+        if obj.image:
+            return request.build_absolute_uri(obj.image.url)
+        return None
+        
+    def get_description(self, obj):
+        return {
+            'uz': obj.description_uz,
+            'ru': obj.description_ru,
+            'en': obj.description_en
+        }
+        
+        
+class CoursePageSerializer(serializers.Serializer):
+    course = Course.objects.all()
+    partner = Partner.objects.all()
+    

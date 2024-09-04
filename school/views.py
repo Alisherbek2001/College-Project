@@ -6,6 +6,7 @@ from .serializers import (
     AboutPageSerializer,
     TeacherPageSerializer,
     BlogPageSerializer,
+    CoursePageSerializer,
 )
 from .models import (
     Slider,
@@ -17,7 +18,8 @@ from .models import (
     Teacher,
     Blog,
     BlogCategory,
-    Tag
+    Tag,
+    Course
 )
 
 class HomePageAPIView(APIView):
@@ -63,3 +65,7 @@ class BlogPageAPIView(APIView):
         }
         serializer = BlogPageSerializer(data,context={'request':request})
         return Response(serializer.data)
+    
+
+class CoursePageAPIView(APIView):
+    pass
