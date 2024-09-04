@@ -68,4 +68,10 @@ class BlogPageAPIView(APIView):
     
 
 class CoursePageAPIView(APIView):
-    pass
+    def get(self,request):
+        data = {
+            'course':Course.objects.all(),
+            'partner':Partner.objects.all()
+        }
+        serializer = CoursePageSerializer(data,context={'request':request})
+        return Response(serializer.data)

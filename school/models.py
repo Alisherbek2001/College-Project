@@ -150,8 +150,8 @@ class Course(BaseModel):
     image = models.ImageField(_("Course image"),upload_to='course/')
     
     class Meta:
-        verbose_name = "Course"
-        verbose_name_plural = "Courses"
+        verbose_name = _("Course")
+        verbose_name_plural = _("Courses")
         
     def __str__(self) -> str:
         return self.name

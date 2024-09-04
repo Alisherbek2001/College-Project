@@ -292,7 +292,7 @@ class CourseSerializer(serializers.ModelSerializer):
     image_url = serializers.SerializerMethodField()
     
     class Meta:
-        model = Tag
+        model = Course
         fields = ['id','name','description','image_url','created_at','updated_at']
         
     def get_name(self,obj):
@@ -317,6 +317,6 @@ class CourseSerializer(serializers.ModelSerializer):
         
         
 class CoursePageSerializer(serializers.Serializer):
-    course = Course.objects.all()
-    partner = Partner.objects.all()
+    course = CourseSerializer(many=True)
+    partner = PartnerSerializer(many=True)
     

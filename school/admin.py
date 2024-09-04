@@ -133,8 +133,8 @@ class TagAdmin(admin.ModelAdmin):
 class CourseAdmin(admin.ModelAdmin):
     list_display = ('name_uz','name_ru','name_en')
     fieldsets = (
-        (_('Uzbek'),{'fields':('name_uz','direction_uz')}),
-        (_('Russian'),{'fields':('name_ru','direction_ru')}),
-        (_('English'),{'fields':('name_en','direction_en')}),
+        (_('Uzbek'),{'fields':('name_uz','description_uz')}),
+        (_('Russian'),{'fields':('name_ru','description_ru')}),
+        (_('English'),{'fields':('name_en','description_en')}),
         (_('Image'), {'fields': ('image', )}),
     )
