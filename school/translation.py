@@ -58,3 +58,4 @@ class TagTranslateOptions(TranslationOptions):
 @register(Course)
 class CourseTranslateOptions(TranslationOptions):
     fields = ('name','description')
+    

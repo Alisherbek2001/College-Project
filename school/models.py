@@ -155,3 +155,18 @@ class Course(BaseModel):
         
     def __str__(self) -> str:
         return self.name
+    
+
+class Contact(BaseModel):
+    first_name = models.CharField(_('First name'),max_length=255)
+    last_name = models.CharField(_("Last name"),max_length=255)
+    email = models.CharField(_("Email"),max_length=255)
+    phone = models.CharField(_("Phone"),max_length=255)
+    detail = models.TextField(_("Detail"))
+    
+    class Meta:
+        verbose_name = _("Contact")
+        verbose_name_plural = _("Contact")
+    
+    def __str__(self) -> str:
+        return f"{self.first_name} {self.last_name}"

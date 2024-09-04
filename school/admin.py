@@ -11,7 +11,8 @@ from .models import (
     BlogCategory,
     Blog,
     Tag,
-    Course
+    Course,
+    Contact,
     )
 
 
@@ -138,3 +139,5 @@ class CourseAdmin(admin.ModelAdmin):
         (_('English'),{'fields':('name_en','description_en')}),
         (_('Image'), {'fields': ('image', )}),
     )
+
+admin.site.register(Contact)

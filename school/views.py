@@ -9,6 +9,8 @@ from .serializers import (
     BlogPageSerializer,
     CoursePageSerializer,
     BlogDetailPageSerializer,
+    ContactPageSerializer,
+    ContactSerializer
 )
 from .models import (
     Slider,
@@ -95,3 +97,20 @@ class CoursePageAPIView(APIView):
         }
         serializer = CoursePageSerializer(data,context={'request':request})
         return Response(serializer.data)
+    
+
+class ContactPageAPIView(APIView):
+    def get(self,request):
+        data = {
+            'partner':Partner.objects.all()
+        }
+        serializer = ContactPageSerializer(data,context={'request':request})
+        return Response(serializer.data)
+    
+    def post(self,request):
+        serializer = ContactSerializer(data=request.data,context={'request':request})
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data,status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        

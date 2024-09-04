@@ -11,6 +11,7 @@ from .models import (
     BlogCategory,
     Tag,
     Course,
+    Contact
     )
 
 class SliderSerializer(serializers.ModelSerializer):
@@ -325,3 +326,13 @@ class BlogDetailPageSerializer(serializers.Serializer):
     blog = BlogSerializer(many=False)
     category = BlogCategorySerializer(many=True)
     tags = TagSerializer(many=True)
+    
+
+class ContactSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Contact
+        fields = ['first_name', 'last_name', 'email', 'phone', 'detail']
+        
+        
+class ContactPageSerializer(serializers.Serializer):
+    partner = PartnerSerializer(many=True)
