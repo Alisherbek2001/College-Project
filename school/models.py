@@ -145,8 +145,8 @@ class Tag(BaseModel):
     
     
 class Course(BaseModel):
-    name = models.CharField(_("Course name"),max_length=255)
-    description = models.TextField(_("Course description"))
+    name = models.CharField(_("Course name"),max_length=255,blank=False, null=False)
+    description = models.TextField(_("Course description"),blank=False, null=False)
     image = models.ImageField(_("Course image"),upload_to='course/')
     
     class Meta:

@@ -58,6 +58,7 @@ LANGUAGES = [
 ]
 
 MODELTRANSLATION_LANGUAGES = ('uz', 'en', 'ru')
+MODELTRANSLATION_REQUIRED_LANGUAGES = ('uz', 'ru', 'en')
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
